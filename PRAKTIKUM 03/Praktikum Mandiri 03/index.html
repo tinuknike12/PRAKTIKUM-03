@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directory Profile Page</title>
+    <style>
+        /* ==========================================
+           RESET & BASIC STYLES
+           ========================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif, Arial;
+            background-color: #f4f5f7;
+            color: #222;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* ==========================================
+           MAIN CONTAINER (FIELDSET STYLING)
+           ========================================== */
+        .main-container {
+            width: 100%;
+            max-width: 850px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 25px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin: 0 auto;
+        }
+
+        .main-container > legend {
+            font-size: 0.95rem;
+            font-weight: bold;
+            padding: 0 10px;
+            color: #333;
+        }
+
+        /* ==========================================
+           1. BAGIAN ATAS (PROFILE HEADER)
+           ========================================== */
+        .profile-header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 25px;
+            align-items: flex-start;
+        }
+
+        /* Foto Diri Real */
+        .profile-photo {
+            flex: 0 0 180px;
+            height: 150px;
+            border: 2px solid #333;
+            border-radius: 4px;
+            background-color: #eee;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Biodata Lengkap */
+        .profile-info {
+            flex: 1;
+            min-width: 240px;
+            line-height: 1.5;
+        }
+
+        .profile-info h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            color: #111;
+        }
+
+        .profile-info address {
+            font-style: normal;
+            margin-bottom: 10px;
+            color: #444;
+            line-height: 1.4;
+        }
+
+        .profile-info p {
+            margin-bottom: 4px;
+        }
+
+        .profile-info a {
+            color: #0000ee;
+            text-decoration: underline;
+        }
+
+        /* Kategori / Right Column Header */
+        .profile-categories {
+            flex: 0 0 140px;
+            text-align: right;
+            line-height: 1.4;
+            font-size: 0.95rem;
+        }
+
+        .profile-categories h3 {
+            text-decoration: underline;
+            margin-bottom: 6px;
+            font-size: 1rem;
+        }
+
+        /* ==========================================
+           2. BAGIAN TENGAH (DESKRIPSI DIRI)
+           ========================================== */
+        .profile-description {
+            margin-bottom: 25px;
+            line-height: 1.6;
+            text-align: justify;
+            font-size: 0.95rem;
+            color: #222;
+        }
+
+        .profile-description p {
+            margin-bottom: 15px;
+        }
+
+        .profile-description p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ==========================================
+           3. BAGIAN BAWAH (MULTIMEDIA & ATTACHMENTS)
+           ========================================== */
+        .bottom-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        /* Pemutar Video Real */
+        .video-box {
+            flex: 1;
+            min-width: 230px;
+            border: 2px solid #333;
+            border-radius: 6px;
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 170px;
+        }
+
+        .video-box video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            outline: none;
+        }
+
+        /* Koleksi Foto Grid 2x2 Real */
+        .photo-gallery {
+            flex: 1;
+            min-width: 210px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 8px;
+            height: 170px;
+        }
+
+        .gallery-item {
+            border: 2px solid #333;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #eee;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.2s ease;
+        }
+
+        .gallery-item img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Attachments Box */
+        .attachments-box {
+            flex: 1;
+            min-width: 220px;
+            border: 2px solid #333;
+            border-radius: 6px;
+            padding: 12px;
+            background-color: #fff;
+            height: 170px;
+        }
+
+        .attachments-box legend {
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 0 6px;
+        }
+
+        .attachment-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 2px;
+        }
+
+        .attachment-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+        .attachment-list a {
+            color: #0000ee;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+
+        .icon {
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 680px) {
+            .profile-header {
+                flex-direction: column;
+            }
+            .profile-categories {
+                text-align: left;
+            }
+            .bottom-section {
+                flex-direction: column;
+            }
+            .video-box, .photo-gallery, .attachments-box {
+                height: auto;
+                min-height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container Utama menggunakan fieldset & legend sesuai mockup -->
+    <fieldset class="main-container">
+        <legend>Web profile</legend>
+
+        <!-- 1. BAGIAN ATAS: FOTO DIRI, BIODATA, & KATEGORI -->
+        <header class="profile-header">
+            <!-- Foto Diri Nyata -->
+            <div class="profile-photo" title="Foto Diri">
+                <img src="img/tinuk foto.png" 
+                     alt="Foto Profile Diri"
+                     onerror="this.src='https://placehold.com/180x150/cccccc/333333?text=Foto+Diri'">
+            </div>
+
+            <!-- Biodata Lengkap -->
+            <div class="profile-info">
+                <h1>Tinuk Nike Widi Asmoro</h1>
+                <address>
+                    Jl. Alamanda Kp. Areman<br>
+                    Gg. H Saman II <br>
+                    Cimanggis, Depok
+                </address>
+                <p><strong>Email:</strong> <a href="tinukasmoro12@gmail.com">tinukasmoro12@gmail.com</a></p>
+                <p><strong>Telephone:</strong> 085692762304 </p>
+            </div>
+
+            <!-- Categories -->
+            <div class="profile-categories">
+                <h3>Categories</h3>
+                <p>Pelajar</p>
+                <p>Teknologi</p>
+                <p>Programming</p>
+                <p>Web Development</p>
+            </div>
+        </header>
+
+        <!-- 2. BAGIAN TENGAH: DESKRIPSI DIRI (2 PARAGRAF) -->
+        <section class="profile-description">
+            <p>
+                Saya adalah seorang mahasiswi prodi teknik informatika angkatan 2026 yang memiliki hobi membaca novel. saya tertarik untuk mempelajari hal baru, terutama berkaitan dengan komputer dan pemrograman. saya juga ingin meningkatkan kemampuan diri, menambah pengalaman, serta memperluas wawasan selama menjadi mahasiswi. 
+            </p>
+            <p>
+                Bagi saya selain belajar, menjadi mahasiswi teknik informatika merupakan kesempatan untuk terus belajar mengembangkan berbagai proyek sederhana untuk meningkatkan kemampuan dalam membuat aplikasi berbasis web. Saya memiliki ketertarikan pada HTML, CSS, JavaScript, PHP, dan teknologi lainnya.
+            </p>
+        </section>
+
+        <!-- 3. BAGIAN BAWAH: MULTIMEDIA REAL & ATTACHMENTS -->
+        <section class="bottom-section">
+            <!-- Pemutar Video Asli -->
+            <div class="video-box" title="Pemutar Video">
+                <video controls preload="metadata" poster="https://images.unsplash.com/photo-1518173946687-a4c8a383392e?w=500&auto=format&fit=crop">
+                    <source src="video/video.mp4">
+                    Browser Anda tidak mendukung tag video.
+                </video>
+            </div>
+
+            <!-- Koleksi Foto Grid 2x2 Nyata -->
+            <div class="photo-gallery">
+                <div class="gallery-item" title="Foto 1">
+                    <img src="img/foto 1.jpeg" alt="Gallery Photo 1">
+                </div>
+                <div class="gallery-item" title="Foto 2">
+                    <img src="img/foto 2.jpeg" alt="Gallery Photo 2">
+                </div>
+                <div class="gallery-item" title="Foto 3">
+                    <img src="img/foto 3.jpeg" alt="Gallery Photo 3">
+                </div>
+                <div class="gallery-item" title="Foto 4">
+                    <img src="img/foto 4.jpeg" alt="Gallery Photo 4">
+                </div>
+            </div>
+
+            <!-- Fieldset Attachments Berisi Link File -->
+            <fieldset class="attachments-box">
+                <legend>Attachments</legend>
+                <ul class="attachment-list">
+                    <li>
+                        <span class="icon">📷</span>
+                        <a href="img/foto 1.jpeg" target="_blank" download>Download file 1.</a>
+                    </li>
+                    <li>
+                        <span class="icon">📄</span>
+                        <a href="img/foto 2.jpeg" target="_blank" download>Download file 2.</a>
+                    </li>
+                    <li>
+                        <span class="icon">⚖️</span>
+                        <a href="img/foto 3.jpeg" target="_blank" download>Download file 3.</a>
+                    </li>
+                    <li>
+                        <span class="icon">📄</span>
+                        <a href="img/foto4.jpeg" target="_blank" download>Download file 4.</a>
+                    </li>
+                </ul>
+            </fieldset>
+        </section>
+    </fieldset>
+
+</body>
+</html>
